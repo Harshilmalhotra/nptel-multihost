@@ -3,76 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NPTEL Certificate Access</title>
+  <title>View NPTEL Certificate</title>
   <style>
     body {
       background-color: #f4f7fb;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       font-family: Arial, sans-serif;
       margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .container { text-align: center; }
-
-    .btn {
-      background-color: #3070bf;
+    header {
+      width: 100%;
+      background: #3070bf;
       color: white;
-      text-decoration: none;
-      padding: 10px 25px;
-      border-radius: 8px;
-      font-size: 18px;
-      font-weight: 100;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      cursor: pointer;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    iframe {
+      width: 90%;
+      height: 90vh;
       border: none;
-      font-family: 'Times New Roman', Times, serif;
+      margin-top: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
     }
 
-    .btn:hover { background-color: #245c9e; transform: translateY(-2px); }
-
-    .info {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #555;
+    .error {
+      margin-top: 20%;
+      color: red;
+      font-size: 18px;
+      text-align: center;
     }
 
-
+    footer {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      padding: 10px;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-  
-    <button class="btn" id="viewBtn">Course Certificate</button>
-    <div class="info" id="certInfo"></div>
-  </div>
+  <header>NPTEL Certificate Viewer</header>
 
+  <iframe id="pdfFrame" style="display:none;"></iframe>
+  <div id="error" class="error" style="display:none;">Invalid or missing certificate ID.</div>
 
+  <footer>© 2025 NPTEL Archive System</footer>
 
   <script>
-    // Extract ?q= parameter from current URL
+    // Certificate ID → PDF link mapping
+    const certificateLinks = {
+      "NPTEL25CS149S633202342": "https://raw.githubusercontent.com/Harshilmalhotra/nptel-multihost/main/certificates/NPTEL25CS149S633202342.pdf",
+      "NPTEL25CS149S533300489": "https://raw.githubusercontent.com/Harshilmalhotra/nptel-multihost/main/certificates/NPTEL25CS149S533300489.pdf",
+      "NPTEL25CS149S533304017": "https://raw.githubusercontent.com/Harshilmalhotra/nptel-multihost/main/certificates/NPTEL25CS149S533304017.pdf"
+    };
+
+    // Extract ?q= parameter
     const params = new URLSearchParams(window.location.search);
-    const certId = params.get("q");
+    const query = params.get("q");
 
-    const viewBtn = document.getElementById("viewBtn");
-    const certInfo = document.getElementById("certInfo");
+    const pdfFrame = document.getElementById("pdfFrame");
+    const errorDiv = document.getElementById("error");
 
-    if (certId) {
-      certInfo.innerHTML = `Certificate ID: <b>${certId}</b>`;
+    if (query && certificateLinks[query]) {
+      pdfFrame.src = certificateLinks[query];
+      pdfFrame.style.display = "block";
+      errorDiv.style.display = "none";
     } else {
-      certInfo.innerHTML = `<span style="color:red;">No certificate ID found in URL.</span>`;
+      pdfFrame.style.display = "none";
+      errorDiv.style.display = "block";
     }
-
-    // On button click, redirect to view page with same ?q=
-    viewBtn.addEventListener("click", () => {
-      if (!certId) {
-        alert("No certificate ID found in URL.");
-        return;
-      }
-      window.location.href = `/noc/Ecertificate/view/?q=${encodeURIComponent(certId)}`;
-    });
   </script>
 </body>
 </html>
