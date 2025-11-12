@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View NPTEL Certificate</title>
+  <style>
+    body {
+      background-color: #f4f7fb;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background: #3070bf;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    iframe {
+      width: 90%;
+      height: 90vh;
+      border: none;
+      margin-top: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+
+    .error {
+      margin-top: 20%;
+      color: red;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+ 
+
+  <iframe id="pdfFrame" style="display:none;"></iframe>
+  <div id="error" class="error" style="display:none;">Invalid or missing certificate ID.</div>
+
+
+
+  <script>
+    // Map certificate IDs (?q=) to GitHub raw PDF links
+    const certificateLinks = {
+      "NPTEL25CS149S633202342": "https://raw.githubusercontent.com/Harshilmalhotra/nptel-multihost/main/certificates/NPTEL25CS149S633202342.pdf",
+      "NPTEL25CS149S533300489": "https://raw.githubusercontent.com/Harshilmalhotra/nptel-multihost/main/certificates/NPTEL25CS149S533300489.pdf",
+      "NPTEL25CS149S533304017": "https://raw.githubusercontent.com/Harshilmalhotra/nptel-multihost/main/certificates/NPTEL25CS149S533304017.pdf"
+    };
+
+    // Get ?q= parameter
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get("q");
+
+    const pdfFrame = document.getElementById("pdfFrame");
+    const errorDiv = document.getElementById("error");
+
+    if (query && certificateLinks[query]) {
+      pdfFrame.src = certificateLinks[query];
+      pdfFrame.style.display = "block";
+      errorDiv.style.display = "none";
+    } else {
+      pdfFrame.style.display = "none";
+      errorDiv.style.display = "block";
+    }
+  </script>
+</body>
+</html>
