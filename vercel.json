@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/noc/Ecertificate/index.html"
+    }
+  ]
+}
