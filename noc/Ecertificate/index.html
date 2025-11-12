@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NPTEL Course Certificate</title>
+  <style>
+    body {
+      background-color: #f4f7fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+
+    .container { text-align: center; }
+
+    .btn {
+      background-color: #3070bf;
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover { background-color: #245c9e; transform: translateY(-2px); }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a id="certificateBtn" class="btn" target="_blank">Download Course Certificate</a>
+    <p id="error" style="color:red;display:none;">Invalid certificate ID.</p>
+  </div>
+
+  <footer>© 2025 NPTEL Archive System</footer>
+
+  <script>
+    // 🔹 Map each query parameter (?q=) to its specific Dropbox (or S3) link
+    const certificateLinks = {
+      "NPTEL25CS149S633202342": "https://www.dropbox.com/scl/fi/wq24i5yg5lil4atnzj36r/NPTEL-2002.pdf?dl=1",
+      "NPTEL25CS149S533300489": "https://www.dropbox.com/scl/fi/xyz/NPTEL-2003.pdf?dl=1",
+      "NPTEL25CS149S533304017": "https://www.dropbox.com/scl/fi/abc/NPTEL-2004.pdf?dl=1"
+    };
+
+    // 🧭 Extract ?q= parameter from URL
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get("q");
+
+    const btn = document.getElementById("certificateBtn");
+    const error = document.getElementById("error");
+
+    if (query && certificateLinks[query]) {
+      btn.href = certificateLinks[query];
+      btn.style.display = "inline-block";
+      error.style.display = "none";
+    } else {
+      btn.style.display = "none";
+      error.style.display = "block";
+    }
+  </script>
+</body>
+</html>
